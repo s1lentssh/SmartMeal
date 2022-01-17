@@ -1,23 +1,31 @@
 <template>
   <div id="main-header-root">
-    <p>Weight</p>
-    <input type="number" v-model="weight" step="1" placeholder="Weight" />
+    <div id="main-header-inner-root">
+      <h1>Smart Meal</h1>
 
-    <p>Mode</p>
-    <select v-model="mode">
-      <option value="hwl">Hard weight loss</option>
-      <option value="ewl">Easy weight loss</option>
-      <option value="def">Default</option>
-      <option value="emg">Easy mass gathering</option>
-      <option value="hmg">Hard mass gathering</option>
-    </select>
+      <div class="separator"></div>
 
-    <p>Proteins</p>
-    <span class="fancy-number">{{ proteins.toFixed(1) }}</span>
-    <p>Fats</p>
-    <span class="fancy-number">{{ fats.toFixed(1) }}</span>
-    <p>Carbs</p>
-    <span class="fancy-number">{{ carbs.toFixed(1) }}</span>
+      <p>Weight</p>
+      <input type="number" v-model="weight" step="1" placeholder="Weight" />
+
+      <p>Mode</p>
+      <select v-model="mode">
+        <option value="hwl">Hard weight loss</option>
+        <option value="ewl">Easy weight loss</option>
+        <option value="def">Default</option>
+        <option value="emg">Easy mass gathering</option>
+        <option value="hmg">Hard mass gathering</option>
+      </select>
+
+      <div class="separator"></div>
+
+      <p>Proteins</p>
+      <span class="fancy-number">{{ proteins.toFixed(1) }}</span>
+      <p>Fats</p>
+      <span class="fancy-number">{{ fats.toFixed(1) }}</span>
+      <p>Carbs</p>
+      <span class="fancy-number">{{ carbs.toFixed(1) }}</span>
+    </div>
   </div>
 </template>
 
@@ -67,24 +75,26 @@ export default {
 
 <style scoped>
 #main-header-root {
-  background: #222;
-  border-radius: 8px;
-  height: 60px;
-  width: calc(100% - 16px);
-  top: 8px;
-  left: 8px;
-  margin-bottom: 16px;
-  position: relative;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  height: 64px;
+  width: 100%;
+  position: fixed;
+}
+
+#main-header-inner-root {
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: calc(80% - 16px);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
 }
 
 p {
-  color: white;
+  color: black;
   margin: 8px;
-  margin-left: 32px;
 }
 
 input[type="number"] {
@@ -92,10 +102,11 @@ input[type="number"] {
   border-radius: 8px;
   padding: 8px;
   width: 50px;
+  background: #ccc;
 }
 
 label {
-  color: white;
+  color: black;
   margin-right: 8px;
   margin-left: 4px;
 }
@@ -104,10 +115,20 @@ select {
   border: none;
   border-radius: 8px;
   padding: 8px;
-  background: white;
+  background: #ccc;
 }
 
 option {
   border-radius: 8px;
+}
+
+.separator {
+  flex: 1;
+}
+
+h1 {
+  color: #111;
+  font-family: "Abril Fatface";
+  font-weight: 400;
 }
 </style>

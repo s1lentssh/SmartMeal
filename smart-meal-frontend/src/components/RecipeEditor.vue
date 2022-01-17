@@ -1,7 +1,7 @@
 <template>
-  <div id="recipe-editor-root" v-if="data">
+  <div id="recipe-editor-root" v-if="recipe">
     <div class="header">
-      <h2>{{ data.name }}</h2>
+      <h2>{{ recipe.name }}</h2>
 
       <h4>Computed</h4>
       <div class="info-text">
@@ -25,8 +25,14 @@
       :key="item"
       :item="item"
       v-on:weight-update="onWeightUpdate"
-      v-on:remove="remove"
+      v-on:remove="onRemoveClicked"
     />
+  </div>
+
+  <div id="recipe-editor-root" v-else>
+    <div class="header">
+      <p>Select a recipe</p>
+    </div>
   </div>
 </template>
 
@@ -39,72 +45,79 @@ export default {
   components: { RecipeEditorItem },
   data: function () {
     return {
-      data: undefined,
+      recipe: undefined,
       ingredients: [],
       weightMap: {},
     };
   },
   methods: {
-    bind: async function (data) {
-      this.data = data;
+    bind: async function (recipe) {
+      this.recipe = recipe;
       this.weightMap = {};
 
-      const ingredients = await methods.get_recipe_ingredients(this.data.id);
-      this.ingredients = ingredients;
+      if (recipe === undefined) {
+        return;
+      }
 
-      for (let item of ingredients) {
+      this.ingredients = await methods.get_recipe_ingredients(this.recipe.id);
+
+      for (let item of this.ingredients) {
         this.weightMap[item.id] = item.ingredient_weight;
       }
     },
 
-    addIngredient: async function (data) {
+    addIngredientToRecipe: async function (ingredient) {
+      if (this.recipe === undefined) {
+        return;
+      }
+
       const response = await methods.add_recipe_ingredient(
-        this.data.id,
-        data.id,
+        this.recipe.id,
+        ingredient.id,
         constraints.defaultWeight
       );
 
       this.ingredients.push(response);
       this.weightMap[response.id] = response.ingredient_weight;
-
-      console.log(response);
     },
 
     onWeightUpdate: async function (item, weight) {
       this.weightMap[item.id] = +weight;
 
       await methods.update_recipe_ingredient(
+        item.recipes_rel.id,
         item.id,
-        item.recipe_id,
-        item.ingredient_id,
+        item.ingredients_rel.id,
         +weight
       );
     },
 
-    remove: async function (data) {
-      this.ingredients = this.ingredients.filter((item) => item.id !== data.id);
-      console.log("Removing", data);
-      await methods.remove_recipe_ingredient(data.id);
+    onRemoveClicked: async function (item) {
+      this.ingredients = this.ingredients.filter((it) => it.id !== item.id);
+      await methods.remove_recipe_ingredient(item.recipes_rel.id, item.id);
     },
   },
   computed: {
     totalProteins: function () {
       return this.ingredients.reduce(
-        (prev, cur) => prev + (cur.proteins / 100) * this.weightMap[cur.id],
+        (prev, cur) =>
+          prev + (cur.ingredients_rel.proteins / 100) * this.weightMap[cur.id],
         0
       );
     },
 
     totalFats: function () {
       return this.ingredients.reduce(
-        (prev, cur) => prev + (cur.fats / 100) * this.weightMap[cur.id],
+        (prev, cur) =>
+          prev + (cur.ingredients_rel.fats / 100) * this.weightMap[cur.id],
         0
       );
     },
 
     totalCarbs: function () {
       return this.ingredients.reduce(
-        (prev, cur) => prev + (cur.carbs / 100) * this.weightMap[cur.id],
+        (prev, cur) =>
+          prev + (cur.ingredients_rel.carbs / 100) * this.weightMap[cur.id],
         0
       );
     },
@@ -114,8 +127,16 @@ export default {
 
 <style scoped>
 #recipe-editor-root {
-  width: 500px;
-  padding: 16px;
+  padding: 16px 8px;
+  overflow-y: auto;
+  height: 100%;
+  flex: 2;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#recipe-editor-root::-webkit-scrollbar {
+  display: none;
 }
 
 h2 {
@@ -127,6 +148,10 @@ h4 {
   color: #444;
   font-size: 12px;
   margin-bottom: 4px;
+}
+
+p {
+  text-align: center;
 }
 
 .header {

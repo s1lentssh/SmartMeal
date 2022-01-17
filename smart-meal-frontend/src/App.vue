@@ -5,7 +5,7 @@
     <ingredient-list
       v-on:add="showIngredientModal"
       v-on:edit="showIngredientModal"
-      v-on:select="addToRecipe"
+      v-on:select="addIngredientToRecipe"
       ref="ingredientList"
     />
 
@@ -78,8 +78,8 @@ export default {
     editRecipe: async function (item) {
       await this.$refs.recipeEditor.bind(item);
     },
-    addToRecipe: function (item) {
-      this.$refs.recipeEditor.addIngredient(item);
+    addIngredientToRecipe: function (item) {
+      this.$refs.recipeEditor.addIngredientToRecipe(item);
     },
   },
   data: function () {
@@ -101,6 +101,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 #app {
@@ -109,7 +110,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 
-  background: #1a4b80;
+  background: #eee;
 }
 
 .fancy-number {
@@ -125,5 +126,10 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  padding-top: 64px;
+  height: calc(100% - 80px);
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

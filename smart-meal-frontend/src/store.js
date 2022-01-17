@@ -7,6 +7,8 @@ const constraints = {
 }
 
 const methods = {
+    // Ingredients
+
     get_ingredients: async () => {
         const response = await axios.get(`${server}/ingredients/`);
         return response.data;
@@ -14,7 +16,6 @@ const methods = {
 
     create_ingredient: async (name, description, image, fats, carbs, proteins) => {
         const params = {
-            id: -1,
             name: name,
             description: description,
             image: image,
@@ -28,7 +29,6 @@ const methods = {
 
     update_ingredient: async (id, name, description, image, fats, carbs, proteins) => {
         const params = {
-            id: id,
             name: name,
             description: description,
             image: image,
@@ -36,7 +36,7 @@ const methods = {
             carbs: carbs,
             proteins: proteins
         };
-        const response = await axios.put(`${server}/ingredients/`, params);
+        const response = await axios.put(`${server}/ingredients/${id}`, params);
         return response.data;
     },
 
@@ -45,6 +45,8 @@ const methods = {
         return response.data;
     },
 
+    // Recipes
+
     get_recipes: async () => {
         const response = await axios.get(`${server}/recipes/`);
         return response.data;
@@ -52,7 +54,6 @@ const methods = {
 
     create_recipe: async (name) => {
         const params = {
-            id: -1,
             name: name
         };
         const response = await axios.post(`${server}/recipes/`, params);
@@ -61,10 +62,9 @@ const methods = {
 
     update_recipe: async (id, name) => {
         const params = {
-            id: id,
             name: name
         };
-        const response = await axios.put(`${server}/recipes/`, params);
+        const response = await axios.put(`${server}/recipes/${id}`, params);
         return response.data;
     },
 
@@ -73,35 +73,33 @@ const methods = {
         return response.data;
     },
 
+    // Recipes ingredients
+
     add_recipe_ingredient: async (recipe_id, ingredient_id, ingredient_weight) => {
         const params = {
-            id: -1,
-            recipe_id: recipe_id,
             ingredient_id: ingredient_id,
             ingredient_weight: ingredient_weight
         };
-        const response = await axios.post(`${server}/recipes_ingredients/`, params);
+        const response = await axios.post(`${server}/recipes/${recipe_id}/ingredients/`, params);
         return response.data;
     },
 
     get_recipe_ingredients: async (recipe_id) => {
-        const response = await axios.get(`${server}/recipes_ingredients/${recipe_id}`);
+        const response = await axios.get(`${server}/recipes/${recipe_id}/ingredients/`);
         return response.data;
     },
 
-    update_recipe_ingredient: async (id, recipe_id, ingredient_id, ingredient_weight) => {
+    update_recipe_ingredient: async (recipe_id, item_id, ingredient_id, ingredient_weight) => {
         const params = {
-            id: id,
-            recipe_id: recipe_id,
             ingredient_id: ingredient_id,
             ingredient_weight: ingredient_weight
         };
-        const response = await axios.put(`${server}/recipes_ingredients/`, params);
+        const response = await axios.put(`${server}/recipes/${recipe_id}/ingredients/${item_id}`, params);
         return response.data;
     },
 
-    remove_recipe_ingredient: async (id) => {
-        const response = await axios.delete(`${server}/recipes_ingredients/${id}`);
+    remove_recipe_ingredient: async (recipe_id, item_id) => {
+        const response = await axios.delete(`${server}/recipes/${recipe_id}/ingredients/${item_id}`);
         return response.data;
     }
 }

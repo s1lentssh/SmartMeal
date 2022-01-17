@@ -25,14 +25,13 @@ export default {
   margin-bottom: 16px;
   border-radius: 8px;
   transition: 0.2s;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: flex-start;
-  border: 2px solid #fff;
+  border: 1px solid #ddd;
 }
 
 #recipe-item-root:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 h3 {
@@ -46,6 +45,7 @@ h3 {
 }
 
 .button-holder > span {
+  margin-left: 16px;
   background: #2364aa;
   color: white;
   border-radius: 50%;
@@ -58,6 +58,6 @@ span:not(:last-child) {
 }
 
 .item_selected {
-  border: 2px solid #2364aa !important;
+  border: 1px solid #2364aa !important;
 }
 </style>

@@ -14,8 +14,10 @@
         <p>{{ data.description }}</p>
       </div>
       <div class="button-holder">
-        <span @click="$emit('edit')" class="material-icons"> edit_note </span>
-        <span @click="$emit('remove')" class="material-icons">
+        <span @click.stop="$emit('edit')" class="material-icons">
+          edit_note
+        </span>
+        <span @click.stop="$emit('remove')" class="material-icons">
           delete_outline
         </span>
       </div>
@@ -50,12 +52,12 @@ export default {
   background: #fff;
   margin-bottom: 16px;
   border-radius: 8px;
-  transition: 0.2s;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.5s;
+  border: 1px solid #ddd;
 }
 
 #ingredient-item-root:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .ingredient-image {
@@ -68,6 +70,7 @@ export default {
 .header-holder {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .image-holder {

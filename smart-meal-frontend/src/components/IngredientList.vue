@@ -1,12 +1,12 @@
 <template>
   <div id="ingredient-list-root">
     <button @click="$emit('add')">
-      <span class="material-icons"> add </span>Add
+      <span class="material-icons"> add </span>Add ingredient
     </button>
     <ingredient-item
       v-for="item in ingredients"
       v-on:edit="$emit('edit', item)"
-      v-on:remove="remove(item)"
+      v-on:remove="removeIngredient(item)"
       :key="item"
       :data="item"
       @click="$emit('select', item)"
@@ -34,9 +34,29 @@ export default {
       this.ingredients = await methods.get_ingredients();
     },
 
-    remove: async function (item) {
-      await methods.remove_ingredient(item.id);
-      await this.update();
+    removeIngredient: async function (item) {
+      const response = await methods.remove_ingredient(item.id);
+
+      switch (response.result) {
+        case "ok":
+          await this.update();
+          break;
+
+        case "error": {
+          let errorMessage = "Ingredient used in\n";
+
+          for (let relation of response.relations) {
+            errorMessage = errorMessage.concat(
+              " - ",
+              relation.recipes_rel.name,
+              "\n"
+            );
+          }
+
+          alert(errorMessage);
+          break;
+        }
+      }
     },
   },
 };
@@ -44,8 +64,16 @@ export default {
 
 <style scoped>
 #ingredient-list-root {
-  width: 300px;
-  padding: 16px;
+  padding: 16px 8px;
+  overflow-y: auto;
+  height: 100%;
+  flex: 1;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#ingredient-list-root::-webkit-scrollbar {
+  display: none;
 }
 
 button {
@@ -62,11 +90,11 @@ button {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 span {

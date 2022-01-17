@@ -1,7 +1,7 @@
 <template>
   <div id="recipe-list-root">
     <button @click="$emit('add')">
-      <span class="material-icons"> add </span>Add
+      <span class="material-icons"> add </span>Add recipe
     </button>
     <recipe-item
       v-for="item in recipes"
@@ -64,8 +64,16 @@ export default {
 
 <style scoped>
 #recipe-list-root {
-  width: 300px;
-  padding: 16px;
+  padding: 16px 8px;
+  overflow-y: auto;
+  height: 100%;
+  flex: 1;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#recipe-list-root::-webkit-scrollbar {
+  display: none;
 }
 
 button {
@@ -82,11 +90,11 @@ button {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 span {

@@ -1,8 +1,8 @@
 <template>
   <div class="ingredient">
     <div class="header-section button-holder">
-      <h3>{{ item.name }}</h3>
-      <span @click="$emit('remove', item)" class="material-icons">
+      <h3>{{ item.ingredients_rel.name }}</h3>
+      <span @click.stop="$emit('remove', item)" class="material-icons">
         delete_outline
       </span>
     </div>
@@ -12,17 +12,23 @@
         <h4>100 g.</h4>
         <div class="info-text">
           <span>Proteins </span>
-          <span class="fancy-number">{{ item.proteins.toFixed(1) }}</span>
+          <span class="fancy-number">{{
+            item.ingredients_rel.proteins.toFixed(1)
+          }}</span>
         </div>
 
         <div class="info-text">
           <span>Fats </span>
-          <span class="fancy-number">{{ item.fats.toFixed(1) }}</span>
+          <span class="fancy-number">{{
+            item.ingredients_rel.fats.toFixed(1)
+          }}</span>
         </div>
 
         <div class="info-text">
           <span>Carbs </span>
-          <span class="fancy-number">{{ item.carbs.toFixed(1) }}</span>
+          <span class="fancy-number">{{
+            item.ingredients_rel.carbs.toFixed(1)
+          }}</span>
         </div>
       </div>
 
@@ -31,21 +37,21 @@
         <div class="info-text">
           <span>Proteins </span>
           <span class="fancy-number">{{
-            ((item.proteins / 100) * weight).toFixed(1)
+            ((item.ingredients_rel.proteins / 100) * weight).toFixed(1)
           }}</span>
         </div>
 
         <div class="info-text">
           <span>Fats </span>
           <span class="fancy-number">{{
-            ((item.fats / 100) * weight).toFixed(1)
+            ((item.ingredients_rel.fats / 100) * weight).toFixed(1)
           }}</span>
         </div>
 
         <div class="info-text">
           <span>Carbs </span>
           <span class="fancy-number">{{
-            ((item.carbs / 100) * weight).toFixed(1)
+            ((item.ingredients_rel.carbs / 100) * weight).toFixed(1)
           }}</span>
         </div>
       </div>
@@ -91,6 +97,7 @@ export default {
 }
 
 .button-holder > span {
+  margin-left: 16px;
   background: #2364aa;
   color: white;
   border-radius: 50%;
