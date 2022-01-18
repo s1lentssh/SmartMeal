@@ -8,10 +8,8 @@ import typing as tp
 from db import database, crud, models, schemas
 
 origins = [
-    "http://localhost",
     "http://localhost:8080",
-    "http://home",
-    "http://home:8080",
+    "http://home:8080"
 ]
 
 app = fa.FastAPI()

@@ -25,6 +25,8 @@
       <span class="fancy-number">{{ fats.toFixed(1) }}</span>
       <p>Carbs</p>
       <span class="fancy-number">{{ carbs.toFixed(1) }}</span>
+      <p>Calories</p>
+      <span class="fancy-number">{{ calories.toFixed(0) }}</span>
     </div>
   </div>
 </template>
@@ -39,7 +41,7 @@ export default {
     };
   },
   computed: {
-    calories: function () {
+    requiredCalories: function () {
       switch (this.mode) {
         case "hwl":
           return 26 * this.weight;
@@ -56,18 +58,22 @@ export default {
       return 0;
     },
     proteins: function () {
-      const day_calories_proteins = this.calories * 0.3;
+      const day_calories_proteins = this.requiredCalories * 0.3;
       return day_calories_proteins / 4;
     },
 
     fats: function () {
-      const day_calories_fats = this.calories * 0.1;
+      const day_calories_fats = this.requiredCalories * 0.1;
       return day_calories_fats / 9;
     },
 
     carbs: function () {
-      const day_calories_carbs = this.calories * 0.6;
+      const day_calories_carbs = this.requiredCalories * 0.6;
       return day_calories_carbs / 4;
+    },
+
+    calories: function () {
+      return this.proteins * 4 + this.fats * 9 + this.carbs * 4;
     },
   },
 };
@@ -86,7 +92,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   height: 100%;
-  width: calc(80% - 16px);
+  width: calc(70% - 16px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +108,7 @@ input[type="number"] {
   border-radius: 8px;
   padding: 8px;
   width: 50px;
-  background: #ccc;
+  background: #ddd;
 }
 
 label {
@@ -115,7 +121,7 @@ select {
   border: none;
   border-radius: 8px;
   padding: 8px;
-  background: #ccc;
+  background: #ddd;
 }
 
 option {

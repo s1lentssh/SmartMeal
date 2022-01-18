@@ -5,18 +5,23 @@
 
       <h4>Computed</h4>
       <div class="info-text">
-        <span>Proteins </span>
+        <span class="fancy-number-header">Proteins </span>
         <span class="fancy-number">{{ totalProteins.toFixed(1) }}</span>
       </div>
 
       <div class="info-text">
-        <span>Fats </span>
+        <span class="fancy-number-header">Fats </span>
         <span class="fancy-number">{{ totalFats.toFixed(1) }}</span>
       </div>
 
       <div class="info-text">
-        <span>Carbs </span>
+        <span class="fancy-number-header">Carbs </span>
         <span class="fancy-number">{{ totalCarbs.toFixed(1) }}</span>
+      </div>
+
+      <div class="info-text">
+        <span class="fancy-number-header">Calories </span>
+        <span class="fancy-number">{{ totalCalories.toFixed(0) }}</span>
       </div>
     </div>
 
@@ -30,7 +35,7 @@
   </div>
 
   <div id="recipe-editor-root" v-else>
-    <div class="header">
+    <div class="empty">
       <p>Select a recipe</p>
     </div>
   </div>
@@ -121,6 +126,10 @@ export default {
         0
       );
     },
+
+    totalCalories: function () {
+      return this.totalProteins * 4 + this.totalFats * 9 + this.totalCarbs * 4;
+    },
   },
 };
 </script>
@@ -150,10 +159,6 @@ h4 {
   margin-bottom: 4px;
 }
 
-p {
-  text-align: center;
-}
-
 .header {
   margin-bottom: 16px;
   border: 1px solid #ddd;
@@ -162,7 +167,25 @@ p {
   border-radius: 8px;
 }
 
+.empty {
+  margin-bottom: 16px;
+  border: 2px dashed #ccc;
+  padding: 64px;
+  border-radius: 8px;
+}
+
+.empty > p {
+  text-align: center;
+  font-weight: 700;
+  color: #aaa;
+}
+
 .info-text {
   margin-bottom: 4px;
+  display: flex;
+}
+
+.fancy-number-header {
+  width: 70px;
 }
 </style>

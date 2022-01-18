@@ -50,11 +50,11 @@ h3 {
   color: white;
   border-radius: 50%;
   padding: 4px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 span:not(:last-child) {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .item_selected {

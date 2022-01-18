@@ -24,16 +24,22 @@
     </div>
 
     <div class="info-text">
-      <span>Proteins </span>
-      <span class="fancy-number">{{ data.proteins }}</span>
+      <span class="fancy-number-header">Proteins </span>
+      <span class="fancy-number">{{ data.proteins.toFixed(1) }}</span>
     </div>
     <div class="info-text">
-      <span>Fats </span>
-      <span class="fancy-number">{{ data.fats }}</span>
+      <span class="fancy-number-header">Fats </span>
+      <span class="fancy-number">{{ data.fats.toFixed(1) }}</span>
     </div>
     <div class="info-text">
-      <span>Carbs </span>
-      <span class="fancy-number">{{ data.carbs }}</span>
+      <span class="fancy-number-header">Carbs </span>
+      <span class="fancy-number">{{ data.carbs.toFixed(1) }}</span>
+    </div>
+    <div class="info-text">
+      <span class="fancy-number-header">Calories </span>
+      <span class="fancy-number">{{
+        (data.carbs * 4 + data.proteins * 4 + data.fats * 9).toFixed(0)
+      }}</span>
     </div>
   </div>
 </template>
@@ -71,6 +77,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
+  margin-bottom: 8px;
 }
 
 .image-holder {
@@ -88,11 +95,8 @@ export default {
   color: white;
   border-radius: 50%;
   padding: 4px;
-  font-size: 18px;
-}
-
-span:not(:last-child) {
-  margin-bottom: 8px;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 h3 {
@@ -106,5 +110,10 @@ h3 {
 
 .info-text {
   margin-bottom: 4px;
+  display: flex;
+}
+
+.fancy-number-header {
+  width: 70px;
 }
 </style>

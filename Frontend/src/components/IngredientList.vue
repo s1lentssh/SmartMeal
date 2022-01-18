@@ -3,6 +3,9 @@
     <button @click="$emit('add')">
       <span class="material-icons"> add </span>Add ingredient
     </button>
+
+    <div class="empty" v-if="ingredients.length === 0"><p>Empty</p></div>
+
     <ingredient-item
       v-for="item in ingredients"
       v-on:edit="$emit('edit', item)"
@@ -100,5 +103,18 @@ button:hover {
 span {
   margin-right: 2px;
   font-size: 15px;
+}
+
+.empty {
+  margin-bottom: 16px;
+  border: 2px dashed #ccc;
+  padding: 32px;
+  border-radius: 8px;
+}
+
+.empty > p {
+  text-align: center;
+  font-weight: 700;
+  color: #aaa;
 }
 </style>

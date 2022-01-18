@@ -8,26 +8,38 @@
     </div>
 
     <div class="compare-sections">
+      <img :src="item.ingredients_rel.image" />
       <div>
         <h4>100 g.</h4>
         <div class="info-text">
-          <span>Proteins </span>
+          <span class="fancy-number-header">Proteins </span>
           <span class="fancy-number">{{
             item.ingredients_rel.proteins.toFixed(1)
           }}</span>
         </div>
 
         <div class="info-text">
-          <span>Fats </span>
+          <span class="fancy-number-header">Fats </span>
           <span class="fancy-number">{{
             item.ingredients_rel.fats.toFixed(1)
           }}</span>
         </div>
 
         <div class="info-text">
-          <span>Carbs </span>
+          <span class="fancy-number-header">Carbs </span>
           <span class="fancy-number">{{
             item.ingredients_rel.carbs.toFixed(1)
+          }}</span>
+        </div>
+
+        <div class="info-text">
+          <span class="fancy-number-header">Calories </span>
+          <span class="fancy-number">{{
+            (
+              item.ingredients_rel.carbs * 4 +
+              item.ingredients_rel.proteins * 4 +
+              item.ingredients_rel.fats * 9
+            ).toFixed(0)
           }}</span>
         </div>
       </div>
@@ -35,23 +47,35 @@
       <div>
         <h4>Computed ({{ weight }} g.)</h4>
         <div class="info-text">
-          <span>Proteins </span>
+          <span class="fancy-number-header">Proteins </span>
           <span class="fancy-number">{{
             ((item.ingredients_rel.proteins / 100) * weight).toFixed(1)
           }}</span>
         </div>
 
         <div class="info-text">
-          <span>Fats </span>
+          <span class="fancy-number-header">Fats </span>
           <span class="fancy-number">{{
             ((item.ingredients_rel.fats / 100) * weight).toFixed(1)
           }}</span>
         </div>
 
         <div class="info-text">
-          <span>Carbs </span>
+          <span class="fancy-number-header">Carbs </span>
           <span class="fancy-number">{{
             ((item.ingredients_rel.carbs / 100) * weight).toFixed(1)
+          }}</span>
+        </div>
+
+        <div class="info-text">
+          <span class="fancy-number-header">Calories </span>
+          <span class="fancy-number">{{
+            (
+              ((item.ingredients_rel.proteins / 100) * 4 +
+                (item.ingredients_rel.fats / 100) * 9 +
+                (item.ingredients_rel.carbs / 100) * 4) *
+              weight
+            ).toFixed(0)
           }}</span>
         </div>
       </div>
@@ -61,7 +85,7 @@
       <input
         type="number"
         v-model="weight"
-        step="1"
+        step="10"
         placeholder="Weight"
         @change="$emit('weight-update', item, weight)"
       />
@@ -102,7 +126,7 @@ export default {
   color: white;
   border-radius: 50%;
   padding: 4px;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -148,6 +172,7 @@ input[type="range"] {
 
 .info-text {
   margin-bottom: 4px;
+  display: flex;
 }
 
 .compare-sections {
@@ -155,6 +180,18 @@ input[type="range"] {
 }
 
 .compare-sections > div {
-  margin-right: 128px;
+  margin-right: 32px;
+}
+
+.fancy-number-header {
+  width: 70px;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 16px;
+  border: 1px solid #888;
 }
 </style>
