@@ -6,17 +6,9 @@ class Association(Base):
     __tablename__ = "recipes_ingredients"
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-
-    recipe_id = sa.Column(
-        sa.ForeignKey("recipes.id"),
-        primary_key=True)
-
-    ingredient_id = sa.Column(
-        sa.ForeignKey("ingredients.id"),
-        primary_key=True)
-
+    recipe_id = sa.Column(sa.ForeignKey("recipes.id"), nullable=False)
+    ingredient_id = sa.Column(sa.ForeignKey("ingredients.id"), nullable=False)
     ingredient_weight = sa.Column(sa.Float)
-
     recipes_rel = sa.orm.relationship("Recipe", back_populates="ingredients")
     ingredients_rel = sa.orm.relationship(
         "Ingredient", back_populates="recipes")

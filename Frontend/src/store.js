@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const server = 'http://home:8000'
+const server = 'http://home:8081'
 
 const constraints = {
     defaultWeight: 50
